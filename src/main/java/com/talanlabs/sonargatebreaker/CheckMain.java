@@ -6,11 +6,18 @@ public class CheckMain {
 
     private static final String DEFAULT_REPORT_TASK_PATH = "target/sonar/report-task.txt";
     private static final int DEFAULT_RETRY = 50;
-    private static final long DEFAULT_SLEEP = 1000 *2;
+    private static final long DEFAULT_SLEEP = 1000;
     private static final boolean DEFAULT_FAIL_ON_WARN = false;
 
     private static void printUsage() {
-        System.out.println("Usage: CheckMain [{-r,--reportTaskPath} a_report]\na_report : Sonar report-task.txt (default target/sonar/report-task.txt)\n");
+        System.out.println("Usage: CheckMain {options}\n" +
+                "-t,--reportTaskPath : Sonar report-task.txt (default target/sonar/report-task.txt)\n" +
+                "-u,--username : Username for SonarQube" +
+                "-p,--password : Password for SonarQube, if Token not fill" +
+                "-r,--retry : Number of retry (wait success analys) default 50" +
+                "-s,--sleep : Sleep between retry default 1000 millisecond" +
+                "-f,--failOnWarn : Fail on warning default false"
+        );
     }
 
     public static void main(String[] args) {

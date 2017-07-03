@@ -5,12 +5,14 @@ import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.request.GetRequest;
 import org.apache.commons.lang3.tuple.Pair;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.Properties;
 
 public class Checker {
@@ -23,6 +25,8 @@ public class Checker {
     private int nbRetry = 50;
     private long sleep = 1000 * 2;
     private boolean failOnWarn = false;
+    private boolean printReport = true;
+    private PrintStream printStream = System.out;
 
     public void setReportTaskPath(String reportTaskPath) {
         this.reportTaskPath = reportTaskPath;
@@ -46,6 +50,14 @@ public class Checker {
 
     public void setFailOnWarn(boolean failOnWarn) {
         this.failOnWarn = failOnWarn;
+    }
+
+    public void setPrintReport(boolean printReport) {
+        this.printReport = printReport;
+    }
+
+    public void setPrintStream(PrintStream printStream) {
+        this.printStream = printStream;
     }
 
     /**
@@ -129,8 +141,13 @@ public class Checker {
         if (jsonResponse.getStatus() != 200) {
             throw new Exception("Failed to read project status " + jsonResponse.getStatus());
         }
-        JsonNode jsonNode = jsonResponse.getBody();
-        return jsonNode.getObject().getJSONObject("projectStatus").getString("status");
+        JSONObject jsonObject = jsonResponse.getBody().getObject();
+
+        if (printReport) {
+            printReport(jsonObject);
+        }
+
+        return jsonObject.getJSONObject("projectStatus").getString("status");
     }
 
     private ReportTask readReportTask() throws IOException {
@@ -142,6 +159,31 @@ public class Checker {
         }
 
         return new ReportTask(properties.getProperty("serverUrl"), properties.getProperty("ceTaskId"), properties.getProperty("ceTaskUrl"));
+    }
+
+    private void printReport(JSONObject jsonObject) {
+        JSONArray condisJSONArray = jsonObject.getJSONObject("projectStatus").getJSONArray("conditions");
+        if (condisJSONArray != null && condisJSONArray.length() > 0) {
+            for (int i = 0; i < condisJSONArray.length(); i++) {
+                printCond(condisJSONArray.getJSONObject(i));
+            }
+        }
+    }
+
+    private void printCond(JSONObject jsonObject) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(jsonObject.getString("metricKey")).append(" => ").append(jsonObject.getString("status"));
+        sb.append(" ( Actual : ").append(jsonObject.getString("actualValue")).append(" ").append(jsonObject.getString("comparator"));
+        if (jsonObject.has("warningThreshold")) {
+            sb.append(" Warning : ").append(jsonObject.getString("warningThreshold"));
+        }
+        if (jsonObject.has("errorThreshold")) {
+            sb.append(" Error : ").append(jsonObject.getString("errorThreshold"));
+        }
+        sb.append(" )");
+
+        printStream.println(sb.toString());
     }
 
     private static class ReportTask {
