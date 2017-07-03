@@ -148,4 +148,14 @@ public class CheckerTest {
 
         Assertions.assertThat(checker.check()).isTrue();
     }
+
+    @Test
+    public void testError5() {
+        sonar.enqueue(new MockResponse().setResponseCode(200).setBody("{\"task\":{\"organization\":\"default-organization\",\"id\":\"AVz4Pj0lCGu3nUwPQk4H\",\"type\":\"REPORT\",\"componentId\":\"AVm3vySdp12Xu7MIiqvQ\",\"componentKey\":\"com.talanlabs:avatar-generator-parent\",\"componentName\":\"Avatar Generator - Parent\",\"componentQualifier\":\"TRK\",\"analysisId\":\"AVz4Pj8EKLxfdP2AyK4d\",\"status\":\"SUCCESS\",\"submittedAt\":\"2017-06-30T09:04:07+0000\",\"submitterLogin\":\"gitlab-ci\",\"startedAt\":\"2017-06-30T09:04:07+0000\",\"executedAt\":\"2017-06-30T09:04:09+0000\",\"executionTimeMs\":1697,\"logs\":false,\"hasScannerContext\":true}}"));
+        sonar.enqueue(new MockResponse().setResponseCode(404));
+        Checker checker = new Checker();
+        checker.setReportTaskPath(reportPath);
+
+        Assertions.assertThat(checker.check()).isFalse();
+    }
 }

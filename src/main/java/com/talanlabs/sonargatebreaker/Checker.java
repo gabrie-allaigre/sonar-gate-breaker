@@ -158,7 +158,7 @@ public class Checker {
             throw new IOException("Failed to read file, not content serverUrl or ceTaskId or ceTaskUrl");
         }
 
-        return new ReportTask(properties.getProperty("serverUrl"), properties.getProperty("ceTaskId"), properties.getProperty("ceTaskUrl"));
+        return new ReportTask(properties.getProperty("serverUrl"), properties.getProperty("ceTaskUrl"));
     }
 
     private void printReport(JSONObject jsonObject) {
@@ -188,28 +188,14 @@ public class Checker {
 
     private static class ReportTask {
 
-        private String serverUrl;
-        private String ceTaskId;
-        private String ceTaskUrl;
+        private final String serverUrl;
+        private final String ceTaskUrl;
 
-        public ReportTask(String serverUrl, String ceTaskId, String ceTaskUrl) {
+        public ReportTask(String serverUrl, String ceTaskUrl) {
             super();
 
             this.serverUrl = serverUrl;
-            this.ceTaskId = ceTaskId;
             this.ceTaskUrl = ceTaskUrl;
-        }
-
-        public String getServerUrl() {
-            return serverUrl;
-        }
-
-        public String getCeTaskId() {
-            return ceTaskId;
-        }
-
-        public String getCeTaskUrl() {
-            return ceTaskUrl;
         }
     }
 }
