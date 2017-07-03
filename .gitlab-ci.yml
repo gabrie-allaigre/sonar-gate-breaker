@@ -54,5 +54,9 @@ deploy_tags_job:
   script:
     - mvn --batch-mode org.codehaus.mojo:versions-maven-plugin:2.1:set -DnewVersion=$CI_BUILD_REF_NAME -DgenerateBackupPoms=false
     - mvn --batch-mode clean deploy -Dmaven.test.skip=true -Djacoco.skip=true -PCI,release
+  artifacts:
+    expire_in: 1 week
+    paths:
+      - target/sonar-gate-breaker-all-*.jar
   tags:
     - docker
