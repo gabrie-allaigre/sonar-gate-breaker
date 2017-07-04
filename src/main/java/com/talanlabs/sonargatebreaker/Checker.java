@@ -23,7 +23,7 @@ public class Checker {
     private String username;
     private String password;
     private int nbRetry = 50;
-    private long sleep = 1000 * 2;
+    private long sleep = 1000L;
     private boolean failOnWarn = false;
     private boolean printReport = true;
     private PrintStream printStream = System.out;

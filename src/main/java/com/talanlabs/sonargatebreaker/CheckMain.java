@@ -6,7 +6,7 @@ public class CheckMain {
 
     private static final String DEFAULT_REPORT_TASK_PATH = "target/sonar/report-task.txt";
     private static final int DEFAULT_RETRY = 50;
-    private static final long DEFAULT_SLEEP = 1000;
+    private static final long DEFAULT_SLEEP = 1000L;
     private static final boolean DEFAULT_FAIL_ON_WARN = false;
     private static final boolean DEFAULT_NO_PRINT = false;
 
