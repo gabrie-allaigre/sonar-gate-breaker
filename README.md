@@ -1,21 +1,39 @@
 # Sonar Quality Gate Breaker
 
-Verify Quality gate after SonarQube pass.
+Verify Quality gate after SonarQube pass and exit if Quality Gate is error.
 
-Command line
+**Donwload main jar** https://github.com/gabrie-allaigre/sonar-gate-breaker/releases/download/1.0.0/sonar-gate-breaker-all-1.0.0.jar
+
+## Command line
 
 ```cmd
-java -jar sonar-gate-breaker-all-1.0.0-SNAPSHOT.jar
+java -jar sonar-gate-breaker-all-1.0.0.jar
 ```
 
-Exit
+## With Gitlab-CI
+
+Example with maven project
+
+Create folder `deploy` and copy `sonar-gate-breaker-all-1.0.0.jar`
+
+```yaml
+test_sonar_job:
+  stage: test
+  only:
+    - master
+  script:
+    - mvn --batch-mode verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.0.1:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -PCI
+    - java -jar deploy/sonar-gate-breaker-all-1.0.0.jar -u $SONAR_LOGIN
+```
+
+## Exit code
 
 | key | description |
 | --- | --- |
 | 0 | Quality gate is SUCCESS or WARN |
 | -1 | Quality gare is ERROR or WARN |
 
-Options
+## Options
 
 | key | type | description |
 | --- | --- | --- |

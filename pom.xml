@@ -6,7 +6,7 @@
 
   <groupId>com.talanlabs</groupId>
   <artifactId>sonar-gate-breaker</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <name>Sonar Gate Breaker</name>
   <description>Get Quality Gate for SonaQube</description>
   <url>https://gitlab.talanlabs.com/gabriel-allaigre/sonar-gate-failure</url>
