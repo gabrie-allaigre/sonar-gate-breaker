@@ -28,6 +28,16 @@
     <nexus-staging-maven-plugin.version>1.6.7</nexus-staging-maven-plugin.version>
     <maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
 
+    <jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
+    <jacoco.it.execution.data.file>${project.build.directory}/coverage-reports/jacoco-it.exec
+    </jacoco.it.execution.data.file>
+    <jacoco.ut.execution.data.file>${project.build.directory}/coverage-reports/jacoco-ut.exec
+    </jacoco.ut.execution.data.file>
+
+    <sonar.jacoco.itReportPath>target/coverage-reports/jacoco-it.exec</sonar.jacoco.itReportPath>
+    <sonar.jacoco.reportPath>target/coverage-reports/jacoco-ut.exec</sonar.jacoco.reportPath>
+    <sonar.sourceEncoding>UTF-8</sonar.sourceEncoding>
+
     <!-- TOOLS -->
     <jargs.version>1.0.0</jargs.version>
     <unirest-java.version>1.4.9</unirest-java.version>
@@ -93,6 +103,32 @@
             <goals>
               <goal>jar</goal>
             </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>pre-unit-test</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <destFile>${jacoco.ut.execution.data.file}</destFile>
+            </configuration>
+          </execution>
+          <execution>
+            <id>pre-integration-test</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+            <configuration>
+              <destFile>${jacoco.it.execution.data.file}</destFile>
+            </configuration>
           </execution>
         </executions>
       </plugin>
