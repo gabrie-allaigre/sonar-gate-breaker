@@ -37,6 +37,7 @@ test_sonar_job:
     - master
   script:
     - mvn --batch-mode verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.0.1:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -PCI
+    - java -jar deploy/sonar-gate-breaker-all-1.0.0.jar -u $SONAR_LOGIN
   tags:
     - docker
 deploy_job:
