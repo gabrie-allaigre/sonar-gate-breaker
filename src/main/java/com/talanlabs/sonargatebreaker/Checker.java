@@ -129,7 +129,9 @@ public class Checker {
             throw new Exception("Failed to read " + reportTask.ceTaskUrl + " return status " + jsonResponse.getStatus());
         }
         JSONObject jsonNode = jsonResponse.getBody().getObject().getJSONObject("task");
-        return Pair.of(jsonNode.getString("analysisId"), jsonNode.getString("status"));
+        String analysisId = jsonNode.has("analysisId") ? jsonNode.getString("analysisId") : null;
+        String status = jsonNode.has("status") ? jsonNode.getString("status") : null;
+        return Pair.of(analysisId, status);
     }
 
     private String getQualityGateStatus(ReportTask reportTask, String analysisId) throws Exception {
