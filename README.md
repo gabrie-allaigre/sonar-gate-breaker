@@ -2,7 +2,7 @@
 
 Verify Quality gate after SonarQube pass and exit if Quality Gate is error.
 
-**Donwload main jar** https://github.com/gabrie-allaigre/sonar-gate-breaker/releases/download/1.0.1/sonar-gate-breaker-all-1.0.1.jar
+**Download main jar** https://github.com/gabrie-allaigre/sonar-gate-breaker/releases/download/1.0.1/sonar-gate-breaker-all-1.0.1.jar
 
 ## Command line
 
