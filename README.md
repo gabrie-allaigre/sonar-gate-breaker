@@ -2,19 +2,19 @@
 
 Verify Quality gate after SonarQube pass and exit if Quality Gate is error.
 
-**Donwload main jar** https://github.com/gabrie-allaigre/sonar-gate-breaker/releases/download/1.0.0/sonar-gate-breaker-all-1.0.0.jar
+**Donwload main jar** https://github.com/gabrie-allaigre/sonar-gate-breaker/releases/download/1.0.1/sonar-gate-breaker-all-1.0.1.jar
 
 ## Command line
 
 ```cmd
-java -jar sonar-gate-breaker-all-1.0.0.jar
+java -jar sonar-gate-breaker-all-1.0.1.jar
 ```
 
 ## With Gitlab-CI
 
 Example with maven project
 
-Create folder `deploy` and copy `sonar-gate-breaker-all-1.0.0.jar`
+Create folder `deploy` and copy `sonar-gate-breaker-all-1.0.1.jar`
 
 ```yaml
 test_sonar_job:
@@ -23,7 +23,7 @@ test_sonar_job:
     - master
   script:
     - mvn --batch-mode verify org.sonarsource.scanner.maven:sonar-maven-plugin:3.0.1:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -PCI
-    - java -jar deploy/sonar-gate-breaker-all-1.0.0.jar -u $SONAR_LOGIN
+    - java -jar deploy/sonar-gate-breaker-all-1.0.1.jar -u $SONAR_LOGIN
 ```
 
 ## Exit code
